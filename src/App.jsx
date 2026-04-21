@@ -286,13 +286,8 @@ function App() {
 
       {/* Image break — Tray */}
       <Reveal className="px-5 md:px-12 pb-14 md:pb-32">
-        <div className="grid grid-cols-2 gap-2 md:gap-4">
-          <div className="aspect-video overflow-hidden">
-            <img src="/img/tray-la.jpg" alt="Tray Irving in Los Angeles" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
-          </div>
-          <div className="aspect-video overflow-hidden">
-            <img src="/img/hero-1.jpg" alt="Tray Irving — Dominican Republic" className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-700" />
-          </div>
+        <div className="w-full aspect-[21/9] overflow-hidden">
+          <img src="/img/tray-la.jpg" alt="Tray Irving in Los Angeles" className="w-full h-full object-cover hover:scale-[1.03] transition-transform duration-700" />
         </div>
       </Reveal>
 
