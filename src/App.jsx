@@ -159,7 +159,7 @@ function App() {
           </Reveal>
           <Reveal className="md:col-span-6 md:col-start-7" delay={1}>
             <div className="aspect-[4/5] overflow-hidden">
-              <img src="/img/hero-2.jpg" alt="Production still" className="w-full h-full object-cover object-top" />
+              <img src="/img/hero-1.jpg" alt="Tray Irving" className="w-full h-full object-cover object-top" />
             </div>
           </Reveal>
         </div>
