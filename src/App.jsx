@@ -25,6 +25,80 @@ function Reveal({ children, className = '', delay = 0 }) {
   )
 }
 
+function HeroVideo({ videoId }) {
+  const containerRef = useRef(null)
+  const playerRef = useRef(null)
+  const [muted, setMuted] = useState(true)
+  const [ready, setReady] = useState(false)
+
+  useEffect(() => {
+    // Load YT IFrame API
+    if (!window.YT) {
+      const tag = document.createElement('script')
+      tag.src = 'https://www.youtube.com/iframe_api'
+      document.head.appendChild(tag)
+    }
+
+    function init() {
+      playerRef.current = new window.YT.Player(containerRef.current, {
+        videoId,
+        playerVars: {
+          autoplay: 1, mute: 1, loop: 1, playlist: videoId,
+          controls: 0, showinfo: 0, rel: 0, modestbranding: 1,
+          playsinline: 1, disablekb: 1, fs: 0, iv_load_policy: 3,
+        },
+        events: {
+          onReady: () => setReady(true),
+        },
+      })
+    }
+
+    if (window.YT && window.YT.Player) {
+      init()
+    } else {
+      window.onYouTubeIframeAPIReady = init
+    }
+
+    return () => {
+      if (playerRef.current?.destroy) playerRef.current.destroy()
+    }
+  }, [videoId])
+
+  const toggleMute = () => {
+    const p = playerRef.current
+    if (!p) return
+    if (muted) { p.unMute(); p.setVolume(80) } else { p.mute() }
+    setMuted(!muted)
+  }
+
+  return (
+    <div className="w-full aspect-[16/9] overflow-hidden bg-surface relative">
+      <div ref={containerRef} className="w-full h-full scale-[1.02]" />
+      {ready && (
+        <button
+          onClick={toggleMute}
+          className="absolute bottom-4 right-4 z-10 w-10 h-10 rounded-full bg-fg/60 backdrop-blur-sm flex items-center justify-center hover:bg-fg/80 transition-colors cursor-pointer"
+          aria-label={muted ? 'Unmute' : 'Mute'}
+        >
+          {muted ? (
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+              <line x1="23" y1="9" x2="17" y2="15" />
+              <line x1="17" y1="9" x2="23" y2="15" />
+            </svg>
+          ) : (
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+            </svg>
+          )}
+        </button>
+      )}
+    </div>
+  )
+}
+
 function VideoCard({ id, title, artist }) {
   const [playing, setPlaying] = useState(false)
   const timeoutRef = useRef(null)
@@ -112,14 +186,7 @@ function App() {
 
       {/* Hero video — muted autoplay loop */}
       <Reveal className="px-6 md:px-12 pb-20 md:pb-32">
-        <div className="w-full aspect-[16/9] overflow-hidden bg-surface relative">
-          <iframe
-            src="https://www.youtube.com/embed/1nWcQ-poVF0?autoplay=1&mute=1&loop=1&playlist=1nWcQ-poVF0&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1"
-            title="Trip 2 China — Tray Irving"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            className="w-full h-full border-0 pointer-events-none scale-[1.02]"
-          />
-        </div>
+        <HeroVideo videoId="1nWcQ-poVF0" />
         <div className="flex justify-between items-end mt-4">
           <p className="text-xs text-muted tracking-wide uppercase">Trip 2 China — Plaqueboymax</p>
           <p className="text-xs text-muted">@bytrvyy</p>
