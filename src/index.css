@@ -13,6 +13,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -22,6 +23,8 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
 }
 
 ::selection {
@@ -32,7 +35,7 @@ body {
 /* Scroll reveal */
 .reveal {
   opacity: 0;
-  transform: translateY(32px);
+  transform: translateY(24px);
   transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
               transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -46,22 +49,32 @@ body {
 .reveal-delay-2 { transition-delay: 0.2s; }
 .reveal-delay-3 { transition-delay: 0.3s; }
 
-/* Video card hover */
+/* Video card hover — desktop only */
 .video-card .video-thumb {
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.video-card:hover .video-thumb {
-  transform: scale(1.03);
+@media (hover: hover) {
+  .video-card:hover .video-thumb {
+    transform: scale(1.03);
+  }
+
+  .video-card .play-icon {
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .video-card:hover .play-icon {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
-.video-card .play-icon {
-  opacity: 0;
-  transform: scale(0.8);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.video-card:hover .play-icon {
-  opacity: 1;
-  transform: scale(1);
+/* Touch devices — always show play icon */
+@media (hover: none) {
+  .video-card .play-icon {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
