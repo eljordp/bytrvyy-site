@@ -215,10 +215,12 @@ function App() {
       {/* Nav */}
       <nav className="px-5 md:px-12 py-5 md:py-6 flex items-center justify-between">
         <span className="font-serif text-xl md:text-2xl italic">Tray Irving</span>
-        <div className="flex items-center gap-4 md:gap-6">
-          <a href="https://www.instagram.com/bytrvyy/" target="_blank" rel="noopener noreferrer" className="text-xs md:text-sm text-muted hover:text-fg transition-colors">Instagram</a>
+        <div className="flex items-center gap-4 md:gap-5">
+          <a href="https://www.instagram.com/bytrvyy/" target="_blank" rel="noopener noreferrer" className="text-xs md:text-sm text-muted hover:text-fg transition-colors">IG</a>
           <a href="http://youtube.com/itzjusttrayz" target="_blank" rel="noopener noreferrer" className="text-xs md:text-sm text-muted hover:text-fg transition-colors">YouTube</a>
-          <a href="https://www.tiktok.com/@whoistray" target="_blank" rel="noopener noreferrer" className="text-xs md:text-sm text-muted hover:text-fg transition-colors hidden md:block">TikTok</a>
+          <a href="https://www.tiktok.com/@whoistray" target="_blank" rel="noopener noreferrer" className="text-xs md:text-sm text-muted hover:text-fg transition-colors">TikTok</a>
+          <a href="https://twitter.com/Whoistrayy" target="_blank" rel="noopener noreferrer" className="text-xs md:text-sm text-muted hover:text-fg transition-colors hidden md:block">X</a>
+          <a href="https://snapchat.com/add/whoistrayyy" target="_blank" rel="noopener noreferrer" className="text-xs md:text-sm text-muted hover:text-fg transition-colors hidden md:block">Snap</a>
         </div>
       </nav>
 
@@ -366,11 +368,12 @@ function App() {
       <footer className="px-5 md:px-12 py-6 md:py-8 border-t border-border">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 md:gap-4">
           <span className="font-serif italic text-lg">Tray Irving</span>
-          <div className="flex items-center gap-5 md:gap-6 text-xs text-muted">
+          <div className="flex items-center flex-wrap gap-4 md:gap-5 text-xs text-muted">
             <a href="https://www.instagram.com/bytrvyy/" target="_blank" rel="noopener noreferrer" className="hover:text-fg transition-colors active:opacity-60">Instagram</a>
             <a href="http://youtube.com/itzjusttrayz" target="_blank" rel="noopener noreferrer" className="hover:text-fg transition-colors active:opacity-60">YouTube</a>
             <a href="https://www.tiktok.com/@whoistray" target="_blank" rel="noopener noreferrer" className="hover:text-fg transition-colors active:opacity-60">TikTok</a>
             <a href="https://twitter.com/Whoistrayy" target="_blank" rel="noopener noreferrer" className="hover:text-fg transition-colors active:opacity-60">X</a>
+            <a href="https://snapchat.com/add/whoistrayyy" target="_blank" rel="noopener noreferrer" className="hover:text-fg transition-colors active:opacity-60">Snapchat</a>
           </div>
         </div>
       </footer>
