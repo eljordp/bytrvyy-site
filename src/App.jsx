@@ -25,29 +25,13 @@ function Reveal({ children, className = '', delay = 0 }) {
   )
 }
 
-function useIsMobile() {
-  const [mobile, setMobile] = useState(false)
-  useEffect(() => {
-    const check = () => setMobile(window.innerWidth < 768 || 'ontouchstart' in window)
-    check()
-    window.addEventListener('resize', check)
-    return () => window.removeEventListener('resize', check)
-  }, [])
-  return mobile
-}
-
 function HeroVideo({ videoId }) {
   const containerRef = useRef(null)
   const playerRef = useRef(null)
   const [muted, setMuted] = useState(true)
   const [ready, setReady] = useState(false)
-  const [tapped, setTapped] = useState(false)
-  const isMobile = useIsMobile()
 
   useEffect(() => {
-    // On mobile, don't auto-init — wait for tap
-    if (isMobile && !tapped) return
-
     if (!window.YT) {
       const tag = document.createElement('script')
       tag.src = 'https://www.youtube.com/iframe_api'
@@ -62,6 +46,7 @@ function HeroVideo({ videoId }) {
           autoplay: 1, mute: 1, loop: 1, playlist: videoId,
           controls: 0, showinfo: 0, rel: 0, modestbranding: 1,
           playsinline: 1, disablekb: 1, fs: 0, iv_load_policy: 3,
+          origin: window.location.origin,
         },
         events: {
           onReady: () => setReady(true),
@@ -79,7 +64,7 @@ function HeroVideo({ videoId }) {
       if (playerRef.current?.destroy) playerRef.current.destroy()
       playerRef.current = null
     }
-  }, [videoId, isMobile, tapped])
+  }, [videoId])
 
   const toggleMute = (e) => {
     e.stopPropagation()
@@ -89,36 +74,9 @@ function HeroVideo({ videoId }) {
     setMuted(!muted)
   }
 
-  const handleTap = () => {
-    if (isMobile && !tapped) setTapped(true)
-  }
-
-  // Mobile: show thumbnail until tapped
-  if (isMobile && !tapped) {
-    return (
-      <div
-        className="w-full aspect-[16/9] overflow-hidden bg-surface relative cursor-pointer"
-        onClick={handleTap}
-      >
-        <img
-          src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
-          alt="Play video"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-14 h-14 rounded-full bg-fg/70 flex items-center justify-center backdrop-blur-sm">
-            <svg width="18" height="20" viewBox="0 0 20 24" fill="none">
-              <path d="M20 12L0 24V0L20 12Z" fill="white" />
-            </svg>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
   return (
     <div className="w-full aspect-[16/9] overflow-hidden bg-surface relative">
-      <div ref={containerRef} className="w-full h-full scale-[1.02]" />
+      <div ref={containerRef} className="w-full h-full scale-[1.02] pointer-events-none" />
       {ready && (
         <button
           onClick={toggleMute}
